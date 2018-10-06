@@ -47,4 +47,4 @@ yarn test
 ```
 
 
-👏 Special Thanks to All of Team ![React](https://github.com/facebook/react) & Creator ![React Redux Starter](https://github.com/drminnaar/react-redux-starter) that has been inspiring and make better and more efficiency development.
+👏 Special Thanks to All of Team [React](https://github.com/facebook/react) & Creator [React Redux Starter](https://github.com/drminnaar/react-redux-starter) that has been inspiring and make better and more efficiency development.
