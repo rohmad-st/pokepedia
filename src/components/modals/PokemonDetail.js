@@ -1,34 +1,104 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Modal from 'react-modal';
+import { connect } from 'react-redux';
 
-const PokemonDetail = (pokemon) => {
-  console.log('PokemonDetail', pokemon);
-  const { name, description } = pokemon;
+const appElement = document.getElementById('app');
+Modal.setAppElement(appElement);
+
+const style = {};
+
+// const Column = (title, value) => (
+//   <div className="col col-md-4">
+//     <h6 className="card-subtitle mb-2 text-muted">{title}</h6>
+//     <p className="card-text">{value}</p>
+//   </div>
+// );
+
+const _combineDescriptions = (descriptions) => {
+  if (!descriptions) return '-';
+  return descriptions.map(des => des.description).join(', ').replace(/,(?!.*,)/gmi, ' and');
+};
+
+const PokemonDetail = ({ pokemon, isOpen, dispatch }) => {
+  if (!pokemon) return null;
+  const { name, descriptions, image, species, weight, height } = pokemon;
+  const color = (species && species.color) ? species.color.name : '-';
+  const shape = (species && species.shape) ? species.shape.name : '-';
+  const habitat = (species && species.habitat) ? species.habitat.name : '-';
+
   return (
-    <div className="modal" tabIndex="-1" role="dialog">
-      <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">{name}</h5>
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+    <Modal
+      className="Modal__Bootstrap modal-dialog modal-dialog-centered"
+      closeTimeoutMS={150}
+      isOpen={isOpen}
+      style={style}
+      onRequestClose={() => dispatch({ type: 'HIDE_DETAIL_POKEMON' })}
+    >
+      <div className="modal-content">
+        <div className="modal-body bg-light">
+          <div className="card-img-top">
+            <img className="mx-auto d-block bg-dark rounded-circle"
+              alt={name}
+              style={{ height: '108px', width: '108px' }}
+              src={image}
+            />
           </div>
-          <div className="modal-body">
-            <p>{description}</p>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" className="btn btn-primary">Save changes</button>
+          <div className="card-body">
+            <h5 className="card-title mx-auto d-block text-uppercase"
+              style={{ textAlign: 'center', fontWeight: '600' }}>{name}
+            </h5>
+            <h6 className="card-subtitle mb-2 text-muted">Description</h6>
+            <p className="card-text">{_combineDescriptions(descriptions)}</p>
+            <div className="row row-modal">
+              {/* { Column('Color', color) } */}
+              <div className="col col-md-4">
+                <h6 className="card-subtitle mb-2 text-muted">Color</h6>
+                <p className="card-text">{color}</p>
+              </div>
+              <div className="col col-md-4">
+                <h6 className="card-subtitle mb-2 text-muted">Shape</h6>
+                <p className="card-text">{shape}</p>
+              </div>
+              <div className="col col-md-4">
+                <h6 className="card-subtitle mb-2 text-muted">Weight</h6>
+                <p className="card-text">{weight | 0}kg</p>
+              </div>
+              <div className="col col-md-4">
+                <h6 className="card-subtitle mb-2 text-muted">Height</h6>
+                <p className="card-text">{height | 0}cm</p>
+              </div>
+              <div className="col col-md-4">
+                <h6 className="card-subtitle mb-2 text-muted">Habitat</h6>
+                <p className="card-text">{habitat}</p>
+              </div>
+            </div>
           </div>
         </div>
+        <div className="modal-footer bg-light"
+          style={{ borderTop: 'none' }}
+        >
+          <button type="button"
+            className="btn btn-secondary"
+            onClick={() => dispatch({ type: 'HIDE_DETAIL_POKEMON' })}
+          >Close
+          </button>
+        </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 
 PokemonDetail.propTypes = {
   pokemon: PropTypes.object,
+  isOpen: PropTypes.bool,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default PokemonDetail;
+// CONFIGURE REACT REDUX
+const mapStateToProps = state => {
+  const { modalType, modalProps } = state.detail;
+  return { modalType, modalProps };
+};
+
+export default connect(mapStateToProps)(PokemonDetail);

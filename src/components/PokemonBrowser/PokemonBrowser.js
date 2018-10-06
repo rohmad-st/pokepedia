@@ -11,7 +11,6 @@ import { fetchPokemons } from '../state/actions/PokemonActions';
 import { LoadingIndicator } from '../shared/LoadingIndicator/LoadingIndicator';
 import { Error } from '../shared/Error/Error';
 
-
 // COMPONENT
 class PokemonBrowser extends Component {
 
@@ -31,8 +30,8 @@ class PokemonBrowser extends Component {
             && <PokemonList pokemons={this.props.pokemons} />
         }
         {
-          this.props.modal && this.props.pokemon
-            && <PokemonDetail pokemon={this.props.pokemon} />
+          (this.props.modalType && this.props.modalType === 'DETAIL_POKEMON') &&
+            <PokemonDetail pokemon={this.props.modalProps} isOpen={true} />
         }
         {
           <LoadingIndicator busy={this.props.fetching} />
@@ -51,14 +50,17 @@ PokemonBrowser.propTypes = {
   fetching: PropTypes.bool.isRequired,
   failed: PropTypes.bool,
   pokemons: PropTypes.array.isRequired,
-  pokemon: PropTypes.object.isRequired,
-  modal: PropTypes.bool.isRequired,
+  modalType: PropTypes.string,
+  modalProps: PropTypes.object,
+  pokemon: PropTypes.object,
 };
 
 // CONFIGURE REACT REDUX
 const mapStateToProps = state => {
-  const { pokemons, fetching, fetched, failed, modal, pokemon } = state.pokemons;
-  return { pokemons, fetching, fetched, failed, modal, pokemon };
+  // console.log('PokemonBrowser mapStateToProps', state);
+  const { pokemons, fetching, fetched, failed } = state.pokemons;
+  const { modalType, modalProps, pokemon } = state.detail;
+  return { pokemons, fetching, fetched, failed, modalType, modalProps, pokemon };
 };
 
 const mapDispatchToProps = dispatch => (

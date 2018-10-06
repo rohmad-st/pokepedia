@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { detailPokemon } from '../state/actions/PokemonActions';
 
 const PokemonListItem = (props) => {
   const { name, image, species } = props.payload;
   return (
     <div className="col-md-3"
-      onClick={() => props.detailPokemon(name)}>
+      onClick={() => props.dispatch({
+        type: 'SHOW_DETAIL_POKEMON',
+        modalType: 'DETAIL_POKEMON',
+        modalProps: props.payload
+      })}>
       <div className="card mb-3 shadow-sm" key={name.toString()}>
         <div className="card-img-top bg-dark">
           <img className="my-3 mx-auto d-block"
@@ -30,7 +32,7 @@ const PokemonListItem = (props) => {
 
 PokemonListItem.propTypes = {
   payload: PropTypes.object.isRequired,
-  detailPokemon: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 // CONFIGURE REACT REDUX
@@ -39,10 +41,4 @@ const mapStateToProps = state => {
   return { modalType, modalProps, pokemon };
 };
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({ detailPokemon }, dispatch)
-);
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PokemonListItem);
+export default connect(mapStateToProps)(PokemonListItem);

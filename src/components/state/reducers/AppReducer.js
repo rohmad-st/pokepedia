@@ -2,7 +2,8 @@
 import { combineReducers } from 'redux';
 
 // IMPORT REDUCERS
-import { FetchPokemonsReducer, DetailPokemonReducer } from '../reducers/PokemonsReducer';
+import { FetchPokemonsReducer } from '../reducers/FetchPokemonsReducer';
+import { DetailPokemonReducer } from '../reducers/DetailPokemonReducer';
 
 // EXPORT APP REDUCER
 export const AppReducer = combineReducers({
