@@ -1,7 +1,7 @@
 # Pokepedia
 Pokepedia (Pokemon Encyclopedia) is a website that provide showcase about Pokemon
 
-![Demo](http://pokepedia.surge.sh)
+[Demo](http://pokepedia.surge.sh)
 
 ## Project setup
 ```
