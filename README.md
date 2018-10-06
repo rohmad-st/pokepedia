@@ -3,6 +3,18 @@ Pokepedia (Pokemon Encyclopedia) is a website that provide showcase about Pokemo
 
 [Demo](http://pokepedia.surge.sh)
 
+## Getting Started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+## Prerequisites
+The following software is already running as well on my system using:
+
+`Node 9.11.2` & `Yarn 1.10.1`
+
+If you cannot install on your system, you have to remove `yarn.lock` first. And then repeat to typing `yarn` on your terminal.
+
+
+
 ## Project setup
 ```
 yarn
@@ -15,7 +27,7 @@ yarn start
 
 ### Compiles and minifies for production
 ```
-yarn build
+yarn build:prod
 ```
 
 ### Run your unit tests
