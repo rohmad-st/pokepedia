@@ -1,5 +1,5 @@
 // import axios from 'axios';
-import { pokemons } from './pokemons.data';
+import pokemons from './pokemons.data.json';
 
 const simulateError = false;
 
@@ -25,7 +25,7 @@ export const detailPokemon = (name) => {
         reject('Failed to fetch list of pokemons');
       } else {
         const result = pokemons.results.filter(pokemon => pokemon.name === name);
-        console.log('detail of pokemon', {name, result});
+        console.log('detail of pokemon', { name, result });
         if (!result || result.length === 0) return reject(`Pokemon with name: ${name} is not found.`);
         return resolve(result.pop());
       }
@@ -35,20 +35,15 @@ export const detailPokemon = (name) => {
 
 // const httpClient = axios.create({
 //   baseURL: process.env.api_host,
-//   // headers: { Authorization: `Token ${authData.access_token}` },
+//   headers: {
+//     'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+//     'Access-Control-Allow-Origin': '*',
+//   },
 // });
+
 // export const fetchPokemons = () => {
-//   httpClient.get('/api/v2/pokemon', {
-//     headers: {
-//       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-//       'Access-Control-Allow-Origin': '*',
-//     },
-//   })
-//     .then((response) => {
-//       console.log('fetch pokemons success.', response);
-//       return Promise.resolve(response);
-//     }, (error) => {
-//       console.log('fetch pokemons error.', error);
-//       return Promise.reject(error);
-//     });
+//   httpClient.get('/api/v2/pokemon', {})
+//     .then(
+//       response => Promise.resolve(response),
+//       error => Promise.reject(error));
 // };

@@ -8,16 +8,30 @@ Modal.setAppElement(appElement);
 
 const style = {};
 
-// const Column = (title, value) => (
-//   <div className="col col-md-4">
-//     <h6 className="card-subtitle mb-2 text-muted">{title}</h6>
-//     <p className="card-text">{value}</p>
-//   </div>
-// );
+const Column = (title, value) => (
+  <div className="col col-md-4">
+    <h6 className="card-subtitle mb-2 text-muted">{title}</h6>
+    <p className="card-text">{value}</p>
+  </div>
+);
 
 const _combineDescriptions = (descriptions) => {
   if (!descriptions) return '-';
-  return descriptions.map(des => des.description).join(', ').replace(/,(?!.*,)/gmi, ' and');
+  return descriptions
+    .filter(des => des.language.name === 'en')
+    .map(des => des.description)
+    .join(', ')
+    .replace(/,(?!.*,)/gmi, ' and');
+};
+
+const _formatWeight = (weight) => {
+  if (!weight) return 0;
+  return `${(weight / 10)}kg`;
+};
+
+const _formatHeight = (height) => {
+  if (!height) return 0;
+  return `${(height / 10)}m`;
 };
 
 const PokemonDetail = ({ pokemon, isOpen, dispatch }) => {
@@ -51,27 +65,21 @@ const PokemonDetail = ({ pokemon, isOpen, dispatch }) => {
             <h6 className="card-subtitle mb-2 text-muted">Description</h6>
             <p className="card-text">{_combineDescriptions(descriptions)}</p>
             <div className="row row-modal">
-              {/* { Column('Color', color) } */}
-              <div className="col col-md-4">
-                <h6 className="card-subtitle mb-2 text-muted">Color</h6>
-                <p className="card-text">{color}</p>
-              </div>
-              <div className="col col-md-4">
-                <h6 className="card-subtitle mb-2 text-muted">Shape</h6>
-                <p className="card-text">{shape}</p>
-              </div>
-              <div className="col col-md-4">
-                <h6 className="card-subtitle mb-2 text-muted">Weight</h6>
-                <p className="card-text">{weight | 0}kg</p>
-              </div>
-              <div className="col col-md-4">
-                <h6 className="card-subtitle mb-2 text-muted">Height</h6>
-                <p className="card-text">{height | 0}cm</p>
-              </div>
-              <div className="col col-md-4">
-                <h6 className="card-subtitle mb-2 text-muted">Habitat</h6>
-                <p className="card-text">{habitat}</p>
-              </div>
+              {
+                [color].map(val => Column('Color', val))
+              }
+              {
+                [shape].map(val => Column('Shape', val))
+              }
+              {
+                [weight].map(val => Column('Weight', _formatWeight(val)))
+              }
+              {
+                [height].map(val => Column('Height', _formatHeight(val)))
+              }
+              {
+                [habitat].map(val => Column('Habitat', val))
+              }
             </div>
           </div>
         </div>
