@@ -9,14 +9,14 @@ const renderList = pokemons => (
 );
 
 const renderListItem = pokemon => (
-  <Fragment key={pokemon.id}>
-    <PokemonListItem key={pokemon.id} payload={pokemon} />
+  <Fragment key={pokemon.name}>
+    <PokemonListItem key={pokemon.name} payload={pokemon} />
   </Fragment>
 );
 
 const PokemonList = (props) => {
   return (
-    <Fragment key={props.pokemons.toString()}>
+    <Fragment>
       {renderList(props.pokemons)}
     </Fragment>
   );
