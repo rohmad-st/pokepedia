@@ -9,7 +9,7 @@ Modal.setAppElement(appElement);
 const style = {};
 
 const Column = (title, value) => (
-  <div className="col col-md-4">
+  <div className="col col-md-4" key={title}>
     <h6 className="card-subtitle mb-2 text-muted">{title}</h6>
     <p className="card-text">{value}</p>
   </div>

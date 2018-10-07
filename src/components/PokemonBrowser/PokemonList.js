@@ -14,13 +14,11 @@ const renderListItem = pokemon => (
   </Fragment>
 );
 
-const PokemonList = (props) => {
-  return (
-    <Fragment>
-      {renderList(props.pokemons)}
-    </Fragment>
-  );
-};
+const PokemonList = props => (
+  <Fragment>
+    {renderList(props.pokemons)}
+  </Fragment>
+);
 
 PokemonList.propTypes = {
   pokemons: PropTypes.array.isRequired,
