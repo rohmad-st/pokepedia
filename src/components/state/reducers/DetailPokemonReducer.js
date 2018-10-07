@@ -9,11 +9,6 @@ const initialState = {
 };
 
 export const DetailPokemonReducer = (state = initialState, action) => {
-  console.log('DetailPokemonReducer object:', {
-    type: action.type,
-    modalType: action.modalType,
-    modalProps: action.modalProps,
-  });
   switch (action.type) {
     case SHOW_DETAIL_POKEMON:
       return {

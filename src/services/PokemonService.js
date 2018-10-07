@@ -1,19 +1,42 @@
+/**
+ * NOTED. I used the json data, bcoz absolutly can't access the API
+ * Neither via POSTMAN or AJAX
+ */
+
 // import axios from 'axios';
 import pokemons from './pokemons.data.json';
 
-const simulateError = false;
+const SIMULATE_ERROR = false;
+const DEFAULT_LIMIT = 8;
+const DEFAULT_TIMEOUT = 250;
 
-export const fetchPokemons = () => {
+export const fetchPokemons = (page = 1) => {
   return new Promise((resolve, reject) => {
     // simulate lengthy service call
     setTimeout(() => {
-      if (simulateError) {
+      if (SIMULATE_ERROR) {
         reject('Failed to fetch list of pokemons');
       } else {
-        console.log('pokemons', pokemons);
-        resolve(pokemons.results);
+        const { results } = pokemons;
+        const totalPage = Math.ceil(results.length / DEFAULT_LIMIT);
+        const minIndex = Math.ceil((page - 1) * DEFAULT_LIMIT);
+        const maxIndex = Math.ceil(page * DEFAULT_LIMIT);
+        const paginationResults = results
+          .filter((_, index) => {
+            return (index >= minIndex) && (index < maxIndex);
+          });
+        const lastResult = {
+          pagination: {
+            limit: DEFAULT_LIMIT,
+            page: page,
+            next: (page === totalPage) ? '' : (page + 1),
+            prev: (page === 1) ? '' : (page - 1),
+          },
+          pokemons: paginationResults
+        };
+        resolve(lastResult);
       }
-    }, 1000);
+    }, DEFAULT_TIMEOUT);
   });
 };
 
@@ -21,15 +44,14 @@ export const detailPokemon = (name) => {
   return new Promise((resolve, reject) => {
     // simulate to get a detail
     setTimeout(() => {
-      if (simulateError) {
+      if (SIMULATE_ERROR) {
         reject('Failed to fetch list of pokemons');
       } else {
         const result = pokemons.results.filter(pokemon => pokemon.name === name);
-        console.log('detail of pokemon', { name, result });
         if (!result || result.length === 0) return reject(`Pokemon with name: ${name} is not found.`);
         return resolve(result.pop());
       }
-    }, 1000);
+    }, DEFAULT_TIMEOUT);
   });
 };
 

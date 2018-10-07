@@ -1,6 +1,6 @@
 {
   "name": "pokepedia",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Pokepedia (Pokemon Encyclopedia) is a website that provide showcase about Pokemon.",
   "scripts": {
     "build": "webpack",

@@ -10,9 +10,9 @@ export const FETCH_POKEMONS_REJECTED = 'FETCH_POKEMONS_REJECTED';
 export const SHOW_DETAIL_POKEMON = 'SHOW_DETAIL_POKEMON';
 export const HIDE_DETAIL_POKEMON = 'HIDE_DETAIL_POKEMON';
 
-const fetchPokemonsAction = () => ({
+const fetchPokemonsAction = (page = 1) => ({
   type: FETCH_POKEMONS,
-  payload: fetchPokemons()
+  payload: fetchPokemons(page)
 });
 
 const detailPokemonsAction = (name) => ({

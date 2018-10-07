@@ -5,11 +5,18 @@ import {
 } from '../actions/PokemonActions';
 
 
+const defaultPagination = {
+  limit: 8,
+  page: 1,
+  next: '',
+  prev: '',
+};
 const initialState = {
   pokemons: [],
   fetching: false,
   fetched: false,
   failed: false,
+  pagination: {...defaultPagination}
 };
 
 export const FetchPokemonsReducer = (state = initialState, action) => {
@@ -17,10 +24,11 @@ export const FetchPokemonsReducer = (state = initialState, action) => {
     case FETCH_POKEMONS_FULFILLED:
       return {
         ...state,
-        pokemons: action.payload,
+        pokemons: action.payload.pokemons,
         fetching: false,
         fetched: true,
         failed: false,
+        pagination: {...action.payload.pagination},
       };
     case FETCH_POKEMONS_PENDING:
       return {
@@ -29,6 +37,7 @@ export const FetchPokemonsReducer = (state = initialState, action) => {
         fetching: true,
         fetched: false,
         failed: false,
+        pagination: {...defaultPagination},
       };
     case FETCH_POKEMONS_REJECTED:
       return {
@@ -37,6 +46,7 @@ export const FetchPokemonsReducer = (state = initialState, action) => {
         fetching: true,
         fetched: false,
         failed: true,
+        pagination: {...defaultPagination},
       };
     default:
       return state;
